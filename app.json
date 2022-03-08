@@ -1,0 +1,12 @@
+{
+    "env": {
+        "API_ID": {"description": "Get this value from https://my.telegram.org"},
+        "API_HASH": {"description": "Get this value from https://my.telegram.org"},
+        "BOT_TOKEN": {
+            "description": "[BOT MODE] - Get this from https://t.me/botfather",
+            "required": false}
+    },
+    "buildpacks": [
+        {"url": "heroku/python"}
+    ]
+}
