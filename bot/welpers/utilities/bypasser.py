@@ -1,18 +1,21 @@
-import requests
 import re
-import cloudscraper
-import urllib.parse
 import time
-from bs4 import BeautifulSoup
+import urllib.parse
 from base64 import standard_b64encode
+
+import cloudscraper
+import requests
+from bs4 import BeautifulSoup
+
 from bot import Config
 
 # wetransfer
-WETRANSFER_API_URL = 'https://wetransfer.com/api/v4/transfers'
-WETRANSFER_DOWNLOAD_URL = WETRANSFER_API_URL + '/{transfer_id}/download'
+WETRANSFER_API_URL = "https://wetransfer.com/api/v4/transfers"
+WETRANSFER_DOWNLOAD_URL = WETRANSFER_API_URL + "/{transfer_id}/download"
+
 
 def art_j(id):
-    scraper = cloudscraper.create_scraper(interpreter='nodejs', allow_brotli=False)
+    scraper = cloudscraper.create_scraper(interpreter="nodejs", allow_brotli=False)
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36"
     }
@@ -21,13 +24,17 @@ def art_j(id):
     query = response.json()
     return query
 
+
 def art_k(id):
     uhh = art_j(id)
-    text = f'Title : {uhh["title"]}\n\n<a href="{uhh["assets"][0]["image_url"]}">ART 🎨</a>'
+    text = (
+        f'Title : {uhh["title"]}\n\n<a href="{uhh["assets"][0]["image_url"]}">ART 🎨</a>'
+    )
     return text
 
+
 def mdis_k(urlx):
-    scraper = cloudscraper.create_scraper(interpreter='nodejs', allow_brotli=False)
+    scraper = cloudscraper.create_scraper(interpreter="nodejs", allow_brotli=False)
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36"
     }
@@ -36,10 +43,11 @@ def mdis_k(urlx):
     query = response.json()
     return query
 
+
 def mdisk(url):
-    check = re.findall(r'\bhttps?://.*mdisk\S+', url)
+    check = re.findall(r"\bhttps?://.*mdisk\S+", url)
     if not check:
-        textx = f'Invalid mdisk url'
+        textx = f"Invalid mdisk url"
         return textx
     else:
         try:
@@ -49,55 +57,58 @@ def mdisk(url):
             text = f'Title : {uhh["filename"]}\n\n{uhh["download"]}'
             return text
         except ValueError:
-            textx = f'The content is deleted.'
+            textx = f"The content is deleted."
             return textx
 
+
 def gplinks(url):
-    check = re.findall(r'\bhttps?://.*gplink\S+', url)
+    check = re.findall(r"\bhttps?://.*gplink\S+", url)
     if not check:
-        textx = f'Invalid GPLinks url'
+        textx = f"Invalid GPLinks url"
         return textx
     else:
-        scraper = cloudscraper.create_scraper(interpreter='nodejs', allow_brotli=False)
+        scraper = cloudscraper.create_scraper(interpreter="nodejs", allow_brotli=False)
         res = scraper.get(url)
-        h = { "referer": res.url }
+        h = {"referer": res.url}
         res = scraper.get(url, headers=h)
-        bs4 = BeautifulSoup(res.content, 'lxml')
-        inputs = bs4.find_all('input')
-        data = { input.get('name'): input.get('value') for input in inputs }
+        bs4 = BeautifulSoup(res.content, "lxml")
+        inputs = bs4.find_all("input")
+        data = {input.get("name"): input.get("value") for input in inputs}
         h = {
-            'content-type': 'application/x-www-form-urlencoded',
-            'x-requested-with': 'XMLHttpRequest'
+            "content-type": "application/x-www-form-urlencoded",
+            "x-requested-with": "XMLHttpRequest",
         }
-        time.sleep(10) # !important
+        time.sleep(10)  # !important
         p = urllib.parse.urlparse(url)
-        final_url = f'{p.scheme}://{p.netloc}/links/go'
+        final_url = f"{p.scheme}://{p.netloc}/links/go"
         res = scraper.post(final_url, data=data, headers=h).json()
-        return res['url']
+        return res["url"]
+
 
 def droplink(url):
-    check = re.findall(r'\bhttps?://.*droplink\S+', url)
+    check = re.findall(r"\bhttps?://.*droplink\S+", url)
     if not check:
-        textx = f'Invalid DropLinks url'
+        textx = f"Invalid DropLinks url"
         return textx
     else:
         client = requests.Session()
         res = client.get(url)
         ref = re.findall("action[ ]{0,}=[ ]{0,}['|\"](.*?)['|\"]", res.text)[0]
-        h = {'referer': ref}
+        h = {"referer": ref}
         res = client.get(url, headers=h)
-        bs4 = BeautifulSoup(res.content, 'lxml')
-        inputs = bs4.find_all('input')
-        data = { input.get('name'): input.get('value') for input in inputs }
+        bs4 = BeautifulSoup(res.content, "lxml")
+        inputs = bs4.find_all("input")
+        data = {input.get("name"): input.get("value") for input in inputs}
         h = {
-            'content-type': 'application/x-www-form-urlencoded',
-            'x-requested-with': 'XMLHttpRequest'
+            "content-type": "application/x-www-form-urlencoded",
+            "x-requested-with": "XMLHttpRequest",
         }
         p = urllib.parse.urlparse(url)
-        final_url = f'{p.scheme}://{p.netloc}/links/go'
+        final_url = f"{p.scheme}://{p.netloc}/links/go"
         time.sleep(3.1)
         res = client.post(final_url, data=data, headers=h).json()
-        return res['url']
+        return res["url"]
+
 
 def _prepare_session() -> requests.Session:
     """Prepare a wetransfer.com session.
@@ -106,14 +117,17 @@ def _prepare_session() -> requests.Session:
     requests.
     """
     s = requests.Session()
-    r = s.get('https://wetransfer.com/')
+    r = s.get("https://wetransfer.com/")
     m = re.search('name="csrf-token" content="([^"]+)"', r.text)
-    s.headers.update({
-        'x-csrf-token': m.group(1),
-        'x-requested-with': 'XMLHttpRequest',
-    })
+    s.headers.update(
+        {
+            "x-csrf-token": m.group(1),
+            "x-requested-with": "XMLHttpRequest",
+        }
+    )
 
     return s
+
 
 def wetransfer(url):
     """Given a wetransfer.com download URL download return the downloadable URL.
@@ -135,12 +149,12 @@ def wetransfer(url):
     could not be parsed.
     """
     # Follow the redirect if we have a short URL
-    if url.startswith('https://we.tl/'):
+    if url.startswith("https://we.tl/"):
         r = requests.head(url, allow_redirects=True)
         url = r.url
 
     recipient_id = None
-    params = urllib.parse.urlparse(url).path.split('/')[2:]
+    params = urllib.parse.urlparse(url).path.split("/")[2:]
 
     if len(params) == 2:
         transfer_id, security_hash = params
@@ -156,21 +170,22 @@ def wetransfer(url):
     if recipient_id:
         j["recipient_id"] = recipient_id
     s = _prepare_session()
-    r = s.post(WETRANSFER_DOWNLOAD_URL.format(transfer_id=transfer_id),
-               json=j)
+    r = s.post(WETRANSFER_DOWNLOAD_URL.format(transfer_id=transfer_id), json=j)
 
     j = r.json()
     if "direct_link" in j:
         return j["direct_link"]
     else:
-        xo = f'The content is expired/deleted.'
+        xo = f"The content is expired/deleted."
         return xo
 
+
 def encod(__str: str) -> str:
-    str_bytes = __str.encode('ascii')
+    str_bytes = __str.encode("ascii")
     bytes_b64 = standard_b64encode(str_bytes)
-    encoded = bytes_b64.decode('ascii')
+    encoded = bytes_b64.decode("ascii")
     return encoded
+
 
 def bifm(url):
     client = requests.Session()

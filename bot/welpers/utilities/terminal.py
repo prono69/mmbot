@@ -1,12 +1,13 @@
 import asyncio
 
+
 class Terminal:
     def __init__(self, process: asyncio.subprocess.Process) -> None:
         self._process = process
-        self._stdout = b''
-        self._stderr = b''
-        self._stdout_line = b''
-        self._stderr_line = b''
+        self._stdout = b""
+        self._stderr = b""
+        self._stdout_line = b""
+        self._stderr_line = b""
         self._finished = False
 
     def cancel(self) -> None:
@@ -18,11 +19,11 @@ class Terminal:
 
     @property
     def read_line(self) -> str:
-        return (self._stdout_line + self._stderr_line).decode('utf-8').strip()
+        return (self._stdout_line + self._stderr_line).decode("utf-8").strip()
 
     @property
     def get_output(self) -> str:
-        return (self._stdout + self._stderr).decode('utf-8').strip()
+        return (self._stdout + self._stderr).decode("utf-8").strip()
 
     async def _read_stdout(self) -> None:
         while True:
@@ -48,9 +49,10 @@ class Terminal:
         self._finished = True
 
     @classmethod
-    async def execute(cls, cmd: str) -> 'Term':
+    async def execute(cls, cmd: str) -> "Term":
         process = await asyncio.create_subprocess_shell(
-            cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
+            cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        )
         t_obj = cls(process)
         asyncio.get_event_loop().create_task(t_obj.worker())
         return t_obj

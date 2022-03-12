@@ -1,21 +1,21 @@
+import asyncio
+import io
 import os
 import sys
-import io
-import asyncio
-import logging
 import traceback
 from getpass import getuser
-from bot import CMD, LOGGER
-from bot import Config
-from bot.welpers.utilities.terminal import Terminal
+
 from pyrogram import Client, filters
-from pyrogram.types import Message
+
+from bot import CMD, Config
+from bot.welpers.utilities.terminal import Terminal
+
 
 @Client.on_message(filters.command(CMD.TEML) & filters.user(Config.AUTH_USER))
 async def teml(bot, update):
-    cmd = update.text.split(' ', 1)
+    cmd = update.text.split(" ", 1)
     if len(cmd) == 1:
-        await update.reply_text('No command to execute was given.')
+        await update.reply_text("No command to execute was given.")
         return
     cmd = cmd[1]
     try:
@@ -42,7 +42,7 @@ async def teml(bot, update):
                     k = await update.reply(out_data)
                 else:
                     await k.edit(out_data)
-            except:
+            except BaseException:
                 pass
     out_data = f"`{output}{t_obj.get_output}`"
     if len(out_data) > 4096:
@@ -51,19 +51,19 @@ async def teml(bot, update):
         with open("terminal.txt", "w+") as ef:
             ef.write(out_data)
             ef.close()
-        await update.reply_document(
-            "terminal.txt", caption=cmd)
+        await update.reply_document("terminal.txt", caption=cmd)
         os.remove("terminal.txt")
         return
     send = k.edit if k else update.reply
     await send(out_data)
 
+
 @Client.on_message(filters.command(CMD.RUNF) & filters.user(Config.AUTH_USER))
 async def eval(bot, update):
     status_m = await update.reply_text("`Processing...`")
-    cmd = update.text.split(' ', 1)
+    cmd = update.text.split(" ", 1)
     if len(cmd) == 1:
-        await update.reply_text('No command to execute was given.')
+        await update.reply_text("No command to execute was given.")
         return
     cmd = cmd[1]
 
