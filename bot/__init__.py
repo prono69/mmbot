@@ -1,13 +1,13 @@
-import os
 import logging
+import os
 
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 LOGGER = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
+
 
 class ENV_VARS(object):
     API_ID = int(os.environ.get("API_ID"))
@@ -19,9 +19,12 @@ class ENV_VARS(object):
     AUTH_USER = int(os.environ.get("AUTH_USER", 0))
     MAX_MESSAGE_LENGTH = int(os.environ.get("MAX_MESSAGE_LENGTH", 4096))
 
+
 Config = ENV_VARS
 
 handler = Config.BOT_USERNAME
+
+
 class CMD(object):
     START = ["start", f"start@{handler}"]
     ATSN = ["artstation", f"artstation@{handler}"]

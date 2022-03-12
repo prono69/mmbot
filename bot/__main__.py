@@ -1,4 +1,3 @@
-import os
 import logging
 from bot import Config
 from pyrogram import Client, __version__
