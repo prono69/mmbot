@@ -1,18 +1,18 @@
 import asyncio
 import io
-import os
 import json
+import os
 import sys
 import traceback
 from getpass import getuser
 
 from pyrogram import Client, filters
-from pyrogram.types import Message, ForceReply
+from pyrogram.types import ForceReply
 
 from bot import CMD, Config
+from bot.modules.markups import base_markup, refresh_space
+from bot.welpers.utilities.functions import get_server_details, ip
 from bot.welpers.utilities.terminal import Terminal
-from bot.welpers.utilities.functions import ip, get_server_speedtest, get_server_details
-from bot.modules.markups import start_and_help, refresh_space, base_markup
 
 
 @Client.on_message(filters.command(CMD.TEML) & filters.user(Config.AUTH_USER))
@@ -126,11 +126,16 @@ async def aexec(code, bot, update):
     )
     return await locals()["__aexec"](bot, update)
 
-    
+
 @Client.on_message(filters.command(CMD.CD) & filters.user(Config.AUTH_USER))
 async def cd(bot, update):
-    chdir = await bot.ask(update.chat.id, "please enter the folder path that you want?",
-                             timeout=120, filters=filters.reply, reply_markup=ForceReply())
+    chdir = await bot.ask(
+        update.chat.id,
+        "please enter the folder path that you want?",
+        timeout=120,
+        filters=filters.reply,
+        reply_markup=ForceReply(),
+    )
     try:
         os.chdir(chdir.text)
         await update.reply_text(f"Changed Directory to `{os.getcwd()}`")
@@ -144,12 +149,12 @@ async def cd(bot, update):
 
 @Client.on_message(filters.command(CMD.FILES) & filters.user(Config.AUTH_USER))
 async def my_files(bot, update):
-    await update.reply_text('what you want to show?', reply_markup=base_markup)
+    await update.reply_text("what you want to show?", reply_markup=base_markup)
 
-    
+
 @Client.on_message(filters.command(CMD.IP) & filters.user(Config.AUTH_USER))
 async def ip_cmd(bot, update):
-    await update.reply(ip(), parse_mode='markdown')
+    await update.reply(ip(), parse_mode="markdown")
 
 
 @Client.on_message(filters.command(CMD.STATUS) & filters.user(Config.AUTH_USER))

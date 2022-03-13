@@ -1,9 +1,10 @@
 import shutil
-import psutil as p
-import httpx
-import speedtest
 from datetime import datetime
 from time import time
+
+import httpx
+import psutil as p
+import speedtest
 
 
 def str_uptime(secs: float):
@@ -18,16 +19,16 @@ def str_uptime(secs: float):
 def ip() -> str:
     url = "http://ip-api.com/json/"
     data = httpx.get(url).json()
-    IP = data['query']
-    ISP = data['isp']
-    Organisation = data['org']
-    country = data['country']
-    City = data['city']
-    Region = data['region']
-    Longitude = data['lon']
-    Latitude = data['lat']
-    Timezone = data['timezone']
-    zip_code = data['zip']
+    IP = data["query"]
+    ISP = data["isp"]
+    Organisation = data["org"]
+    country = data["country"]
+    City = data["city"]
+    Region = data["region"]
+    Longitude = data["lon"]
+    Latitude = data["lat"]
+    Timezone = data["timezone"]
+    zip_code = data["zip"]
 
     text = f"""
 **My IP:** {IP}
@@ -48,7 +49,13 @@ def get_server_details():
 
     dtotal, dused, dfree = shutil.disk_usage(".")
     mem = p.virtual_memory()
-    tram, aram, uram, fram, fpercent = mem.total, mem.available, mem.used, mem.free, mem.percent
+    tram, aram, uram, fram, fpercent = (
+        mem.total,
+        mem.available,
+        mem.used,
+        mem.free,
+        mem.percent,
+    )
 
     cpuf = p.cpu_freq()
     ccpu, mcpu = cpuf.current, cpuf.max
@@ -63,7 +70,7 @@ __Storage__
   Free: {human_readable_speed(dfree)}
 
 __Core & Cpu Info__
-  CPU Frequency: {ccpu} Mhz 
+  CPU Frequency: {ccpu} Mhz
   Max: {mcpu}
   PCore: {pcore} LCore: {lcore}
 
@@ -89,7 +96,7 @@ def get_server_speedtest():
     speedy.upload()
     speedy.results.share()
     speedresult = speedy.results.dict()
-    image_url = (speedresult['share'])
+    image_url = speedresult["share"]
     speedstring = f"""__Server SpeedTest Result__
 **Server Details**
 
@@ -107,11 +114,10 @@ __ISP__:**{speedresult['client']['isp']}**
 
 
 def human_readable_speed(size):
-    power = 2 ** 10
+    power = 2**10
     zero = 0
     units = {0: "", 1: "Kb", 2: "MB", 3: "Gb", 4: "Tb"}
     while size > power:
         size /= power
         zero += 1
     return f"{round(size, 2)} {units[zero]}"
-
