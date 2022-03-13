@@ -1,14 +1,18 @@
 import asyncio
 import io
 import os
+import json
 import sys
 import traceback
 from getpass import getuser
 
 from pyrogram import Client, filters
+from pyrogram.types import Message, ForceReply
 
 from bot import CMD, Config
 from bot.welpers.utilities.terminal import Terminal
+from bot.welpers.utilities.functions import ip, get_server_speedtest, get_server_details
+from bot.modules.markups import start_and_help, refresh_space, base_markup
 
 
 @Client.on_message(filters.command(CMD.TEML) & filters.user(Config.AUTH_USER))
@@ -74,28 +78,29 @@ async def eval(bot, update):
     stdout, stderr, exc = None, None, None
 
     try:
-        await aexec(cmd, bot, update)
+        value = await aexec(cmd, bot, update)
     except Exception:
-        exc = traceback.format_exc()
+        exc = traceback.format_exc().strip()
 
-    stdout = redirected_output.getvalue()
-    stderr = redirected_error.getvalue()
+    stdout = redirected_output.getvalue().strip()
+    stderr = redirected_error.getvalue().strip()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
+    output = exc or stderr or stdout or value
 
-    evaluation = ""
-    if exc:
-        evaluation = exc
-    elif stderr:
-        evaluation = stderr
-    elif stdout:
-        evaluation = stdout
-    else:
-        evaluation = "Success"
+    if output is None:
+        output = "😴"
+    elif output == "":
+        output = '""'
+    elif isinstance(output, (dict, list)):
+        try:
+            output = json.dumps(output, indent=4, ensure_ascii=False)
+        except Exception:
+            pass
 
     final_output = (
         "<b>EVAL</b>: <code>{}</code>\n\n<b>OUTPUT</b>:\n<code>{}</code> \n".format(
-            cmd, evaluation.strip()
+            cmd, output
         )
     )
 
@@ -120,3 +125,33 @@ async def aexec(code, bot, update):
         + "".join(f"\n {l}" for l in code.split("\n"))
     )
     return await locals()["__aexec"](bot, update)
+
+    
+@Client.on_message(filters.command(CMD.CD) & filters.user(Config.AUTH_USER))
+async def cd(bot, update):
+    chdir = await bot.ask(update.chat.id, "please enter the folder path that you want?",
+                             timeout=120, filters=filters.reply, reply_markup=ForceReply())
+    try:
+        os.chdir(chdir.text)
+        await update.reply_text(f"Changed Directory to `{os.getcwd()}`")
+    except FileNotFoundError:
+        await update.reply_text("incorrect path!")
+    except TimeoutError:
+        pass
+    except Exception as e:
+        await update.reply_text(str(e))
+
+
+@Client.on_message(filters.command(CMD.FILES) & filters.user(Config.AUTH_USER))
+async def my_files(bot, update):
+    await update.reply_text('what you want to show?', reply_markup=base_markup)
+
+    
+@Client.on_message(filters.command(CMD.IP) & filters.user(Config.AUTH_USER))
+async def ip_cmd(bot, update):
+    await update.reply(ip(), parse_mode='markdown')
+
+
+@Client.on_message(filters.command(CMD.STATUS) & filters.user(Config.AUTH_USER))
+async def stats(bot, update):
+    await update.reply_text(get_server_details(), reply_markup=refresh_space)

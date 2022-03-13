@@ -6,3 +6,9 @@ pyrogram
 requests
 tgcrypto
 urllib3
+pyromod
+httpx
+speedtest-cli
+psutil
+disk
+gitpython

@@ -16,7 +16,7 @@ class ENV_VARS(object):
     BOT_TOKEN = os.environ.get("BOT_TOKEN")
     BOT_USERNAME = os.environ.get("BOT_USERNAME")
     LANGUAGE = os.environ.get("LANGUAGE", "EN")
-    AUTH_USER = int(os.environ.get("AUTH_USER", 0))
+    AUTH_USER = tuple(filter(lambda x: x, map(int, environ.get("AUTH_USER", "0").split())))
     MAX_MESSAGE_LENGTH = int(os.environ.get("MAX_MESSAGE_LENGTH", 4096))
 
 
@@ -33,5 +33,9 @@ class CMD(object):
     GPLK = ["gplink", f"gplink@{handler}"]
     MDIK = ["mdisk", f"mdisk@{handler}"]
     WETR = ["wetransfer", f"wetransfer@{handler}"]
-    TEML = ["teml", f"teml@{handler}"]
+    TEML = ["term", f"term@{handler}"]
     RUNF = ["eval", f"eval@{handler}"]
+    CD = ["cd", f"cd@{handler}"]
+    FILES = ["my_files", f"my_files@{handler}"]
+    IP = ["ip", f"ip@{handler}"]
+    STATUS = ["stats", f"stats@{handler}"]
