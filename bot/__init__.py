@@ -17,7 +17,7 @@ class ENV_VARS(object):
     BOT_USERNAME = os.environ.get("BOT_USERNAME")
     LANGUAGE = os.environ.get("LANGUAGE", "EN")
     AUTH_USER = tuple(
-        filter(lambda x: x, map(int, environ.get("AUTH_USER", "0").split()))
+        filter(lambda x: x, map(int, os.environ.get("AUTH_USER", "0").split()))
     )
     MAX_MESSAGE_LENGTH = int(os.environ.get("MAX_MESSAGE_LENGTH", 4096))
 
