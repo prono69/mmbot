@@ -47,6 +47,7 @@ def set_share(path, session):
 
 def run(path):
     root_folder = FbRoot
+    hash = None
     if path.startswith(root_folder):
         cut = path.split(root_folder)
         session = login(headers)

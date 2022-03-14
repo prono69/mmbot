@@ -129,18 +129,17 @@ async def aexec(code, bot, update):
 
 @Client.on_message(filters.command(CMD.CD) & filters.user(AUTH_USER))
 async def cd(bot, update):
-    chdir = await bot.ask(
-        update.chat.id,
-        "please enter the folder path that you want?",
-        timeout=120,
-        filters=filters.reply,
-        reply_markup=ForceReply(),
-    )
+    cmd = update.text.split(" ", 1)
+    if len(cmd) == 1:
+        await update.reply_text("No command to execute was given.")
+        return
+    cmd = cmd[1]
     try:
-        os.chdir(chdir.text)
+        os.chdir(cmd)
         await update.reply_text(f"Changed Directory to `{os.getcwd()}`")
     except FileNotFoundError:
         await update.reply_text("incorrect path!")
+        return
     except TimeoutError:
         pass
     except Exception as e:
