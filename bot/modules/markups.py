@@ -13,7 +13,7 @@ from pyrogram.types import (
 )
 
 from bot.welpers.utilities.functions import get_server_details
-from bot.welpers.utilities.functions.filebrowserapi import run as fb_api
+from bot.welpers.utilities.filebrowserapi import run as fb_api
 from bot.welpers.utilities.terminal import Terminal
 
 # your filebrowser server address. PS. It could set in config.py and import it.
