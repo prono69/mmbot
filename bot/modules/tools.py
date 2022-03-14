@@ -7,7 +7,6 @@ import traceback
 from getpass import getuser
 
 from pyrogram import Client, filters
-from pyrogram.types import ForceReply
 
 from bot import AUTH_USER, CMD, Config
 from bot.modules.markups import base_markup, refresh_space
