@@ -9,7 +9,7 @@ from getpass import getuser
 from pyrogram import Client, filters
 from pyrogram.types import ForceReply
 
-from bot import CMD, Config, AUTH_USER
+from bot import AUTH_USER, CMD, Config
 from bot.modules.markups import base_markup, refresh_space
 from bot.welpers.utilities.functions import get_server_details, ip
 from bot.welpers.utilities.terminal import Terminal
