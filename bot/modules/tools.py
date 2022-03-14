@@ -14,7 +14,7 @@ from bot.welpers.utilities.functions import get_server_details, ip
 from bot.welpers.utilities.terminal import Terminal
 
 
-@Bot.on_message(filters.command(CMD.TEML) & filters.user(AUTH_USER))
+@Client.on_message(filters.command(CMD.TEML) & filters.user(AUTH_USER))
 async def teml(bot, update):
     cmd = update.text.split(" ", 1)
     if len(cmd) == 1:
