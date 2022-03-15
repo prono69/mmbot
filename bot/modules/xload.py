@@ -9,6 +9,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import BadRequest
 from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 from pySmartDL import SmartDL
+
 from bot import AUTH_USER, Config
 
 CB_BUTTONS = [
