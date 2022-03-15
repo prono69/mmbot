@@ -18,6 +18,8 @@ class ENV_VARS(object):
     LANGUAGE = os.environ.get("LANGUAGE", "EN")
     AUTH_USER = set(int(x) for x in os.environ.get("AUTH_USER", "").split())
     MAX_MESSAGE_LENGTH = int(os.environ.get("MAX_MESSAGE_LENGTH", 4096))
+    BUTTONS = bool(os.environ.get("BUTTONS"))
+    AS_ZIP = bool(os.environ.get("AS_ZIP"))
 
 
 Config = ENV_VARS

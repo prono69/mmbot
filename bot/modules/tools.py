@@ -130,7 +130,7 @@ async def aexec(code, bot, update):
 async def cd(bot, update):
     cmd = update.text.split(" ", 1)
     if len(cmd) == 1:
-        await update.reply_text("No command to execute was given.")
+        await update.reply_text("Give path bitch!")
         return
     cmd = cmd[1]
     try:
