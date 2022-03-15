@@ -9,8 +9,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import BadRequest
 from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 from pySmartDL import SmartDL
-
-from bot import AUTH_USER
+from bot import AUTH_USER, Config
 
 CB_BUTTONS = [
     [
@@ -111,7 +110,7 @@ async def absolute_paths(directory):
 
 
 if AUTH_USER:
-    OWNER_FILTER = filters.chat(int(AUTH_USER)) & filters.incoming
+    OWNER_FILTER = filters.chat(AUTH_USER) & filters.incoming
 else:
     OWNER_FILTER = filters.incoming
 
@@ -124,13 +123,13 @@ async def linkloader(bot, update):
         filters="text",
         timeout=300,
     )
-    if BUTTONS:
+    if Config.BUTTONS:
         return await xlink.reply(
             "You wanna upload files as?",
             True,
             reply_markup=InlineKeyboardMarkup(CB_BUTTONS),
         )
-    elif BUTTONS == False:
+    elif Config.BUTTONS == False:
         pass
     dirs = f"./downloads/{update.from_user.id}"
     if not os.path.isdir(dirs):
@@ -152,7 +151,7 @@ async def linkloader(bot, update):
         except BadRequest:
             pass
     await pablo.edit_text("Uploading...")
-    if AS_ZIP:
+    if Config.AS_ZIP:
         shutil.make_archive(output_filename, "zip", dirs)
         start_time = time.time()
         await update.reply_document(
@@ -163,7 +162,7 @@ async def linkloader(bot, update):
         await pablo.delete()
         os.remove(filename)
         shutil.rmtree(dirs)
-    elif AS_ZIP == False:
+    elif Config.AS_ZIP == False:
         dldirs = [i async for i in absolute_paths(dirs)]
         rm, total, up = len(dldirs), len(dldirs), 0
         await pablo.edit_text(f"Total: {total}\nUploaded: {up}\nUploading: {rm}")
@@ -189,13 +188,13 @@ async def linkloader(bot, update):
 
 @Client.on_message(filters.document & OWNER_FILTER)
 async def loader(bot, update):
-    if BUTTONS:
+    if Config.BUTTONS:
         return await update.reply(
             "You wanna upload files as?",
             True,
             reply_markup=InlineKeyboardMarkup(CB_BUTTONS),
         )
-    elif BUTTONS == False:
+    elif Config.BUTTONS == False:
         pass
     dirs = f"./downloads/{update.from_user.id}"
     if not os.path.isdir(dirs):
@@ -223,7 +222,7 @@ async def loader(bot, update):
                 pass
     await pablo.edit_text("Uploading...")
     os.remove(fl)
-    if AS_ZIP:
+    if Config.AS_ZIP:
         shutil.make_archive(output_filename, "zip", dirs)
         start_time = time.time()
         await update.reply_document(
@@ -234,7 +233,7 @@ async def loader(bot, update):
         await pablo.delete()
         os.remove(filename)
         shutil.rmtree(dirs)
-    elif AS_ZIP == False:
+    elif Config.AS_ZIP == False:
         dldirs = [i async for i in absolute_paths(dirs)]
         rm, total, up = len(dldirs), len(dldirs), 0
         await pablo.edit_text(f"Total: {total}\nUploaded: {up}\nUploading: {rm}")
