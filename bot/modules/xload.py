@@ -9,7 +9,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import BadRequest
 from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 from pySmartDL import SmartDL
-from bot import AUTH_USER, Config
+from bot import AUTH_USER, Config, oppai
 
 CB_BUTTONS = [
     [
@@ -115,7 +115,7 @@ else:
     OWNER_FILTER = filters.incoming
 
 
-@Client.on_message(filters.command("link") & OWNER_FILTER)
+@oppai.on_message(filters.command("link") & OWNER_FILTER)
 async def linkloader(bot, update):
     xlink = await bot.ask(
         update.chat.id,
@@ -186,7 +186,7 @@ async def linkloader(bot, update):
         shutil.rmtree(dirs)
 
 
-@Client.on_message(filters.document & OWNER_FILTER)
+@oppai.on_message(filters.document & OWNER_FILTER)
 async def loader(bot, update):
     if Config.BUTTONS:
         return await update.reply(
