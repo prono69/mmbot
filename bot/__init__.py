@@ -50,9 +50,7 @@ class CMD(object):
     IP = ["ip", f"ip@{handler}"]
     STATUS = ["stats", f"stats@{handler}"]
 
-    
-    
-    
+
 oppai = Client(
     "OppaiRobot",
     api_id=Config.API_ID,
