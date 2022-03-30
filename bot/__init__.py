@@ -4,8 +4,6 @@ import os
 from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 
-from bot import Config
-
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
