@@ -6,7 +6,7 @@ import sys
 import traceback
 from getpass import getuser
 
-from pyrogram import Client, filters
+from pyrogram import filters
 
 from bot import AUTH_USER, CMD, Config, oppai
 from bot.modules.markups import base_markup, refresh_space

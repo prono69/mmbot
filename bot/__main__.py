@@ -1,6 +1,6 @@
 import logging
-from bot import Config, oppai
-from pyrogram import Client, __version__
+from bot import oppai
+from pyrogram import __version__
 from pyrogram.raw.all import layer
 
 logging.basicConfig(

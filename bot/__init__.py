@@ -1,23 +1,27 @@
 import logging
 import os
-import logging
-from bot import Config
+
 from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 
+from bot import Config
+
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 LOGGER = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
-plugins = dict(
-    root="bot/modules"
-)
+plugins = dict(root="bot/modules")
 
-oppai = Client("OppaiRobot", api_id=Config.API_ID, api_hash=Config.API_HASH, bot_token=Config.BOT_TOKEN, plugins=plugins)
+oppai = Client(
+    "OppaiRobot",
+    api_id=Config.API_ID,
+    api_hash=Config.API_HASH,
+    bot_token=Config.BOT_TOKEN,
+    plugins=plugins,
+)
 
 
 class ENV_VARS(object):
