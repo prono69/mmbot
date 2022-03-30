@@ -13,14 +13,6 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 plugins = dict(root="bot/modules")
 
-oppai = Client(
-    "OppaiRobot",
-    api_id=Config.API_ID,
-    api_hash=Config.API_HASH,
-    bot_token=Config.BOT_TOKEN,
-    plugins=plugins,
-)
-
 
 class ENV_VARS(object):
     API_ID = int(os.environ.get("API_ID"))
@@ -57,3 +49,14 @@ class CMD(object):
     FILES = ["my_files", f"my_files@{handler}"]
     IP = ["ip", f"ip@{handler}"]
     STATUS = ["stats", f"stats@{handler}"]
+
+    
+    
+    
+oppai = Client(
+    "OppaiRobot",
+    api_id=Config.API_ID,
+    api_hash=Config.API_HASH,
+    bot_token=Config.BOT_TOKEN,
+    plugins=plugins,
+)
