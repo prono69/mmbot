@@ -27,6 +27,7 @@ else:
 @Client.on_message(filters.command("link") & OWNER_FILTER)
 async def linkloader(bot, update):
     # xlink = await update.reply_text("Processing...")
+    cmd = update.text.split(" ", 1)[1]
     if Config.BUTTONS:
         return await update.reply_text(
             "You wanna upload files as?",
@@ -41,7 +42,7 @@ async def linkloader(bot, update):
     output_filename = str(update.from_user.id)
     filename = f"./{output_filename}.zip"
     pablo = await update.reply_text("Downloading...")
-    urlx = update.text.split("\n")
+    urlx = cmd.split("\n")
     rm, total, up = len(urlx), len(urlx), 0
     await pablo.edit_text(f"Total: {total}\nDownloaded: {up}\nDownloading: {rm}")
     for url in urlx:
