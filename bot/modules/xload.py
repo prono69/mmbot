@@ -34,7 +34,8 @@ async def linkloader(bot, update):
 	cmd = update.text.split(" ", 1)
 	cmd = cmd[1]
 	if len(cmd) == 1:
-		return xlink = await update.reply_text("Send your links, separated each link by new line")
+		xlink = await update.reply_text("Send your links, separated each link by new line")
+		return
     if Config.BUTTONS:
         return await xlink.reply(
             "You wanna upload files as?",
