@@ -26,10 +26,9 @@ else:
 
 @Client.on_message(filters.command("link") & OWNER_FILTER)
 async def linkloader(bot, update):
-    xlink = await update.reply_text("Processing...")
-    update.text.split(" ", 1)[1]
+    # xlink = await update.reply_text("Processing...")
     if Config.BUTTONS:
-        return await xlink.reply(
+        return await update.reply_text(
             "You wanna upload files as?",
             True,
             reply_markup=InlineKeyboardMarkup(CB_BUTTONS),
