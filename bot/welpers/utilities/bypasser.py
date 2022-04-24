@@ -6,9 +6,9 @@ from base64 import standard_b64encode
 import cloudscraper
 import requests
 from bs4 import BeautifulSoup
-from bot.welpers.utilities.functions import humanbytes, get_readable_time
 
 from bot import Config
+from bot.welpers.utilities.functions import get_readable_time, humanbytes
 
 # wetransfer
 WETRANSFER_API_URL = "https://wetransfer.com/api/v4/transfers"
@@ -55,8 +55,8 @@ def mdisk(url):
             fxl = url.split("/")
             urlx = fxl[-1]
             uhh = mdis_k(urlx)
-            size = uhh['size']
-            duration = uhh['duration']
+            size = uhh["size"]
+            duration = uhh["duration"]
             text = f"<b><u>Direct Link :</u></b>\n<b>Title : {uhh['filename']}</b>\n<b>Size : {humanbytes(size)}</b>\n<b>Duration : {get_readable_time(duration)}</b>\n**Link : [HERE]({uhh['download']})**"
             return text
         except ValueError:

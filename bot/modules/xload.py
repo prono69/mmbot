@@ -1,17 +1,13 @@
-import math
 import os
 import shutil
 import time
-from urllib.error import HTTPError
-from urllib.parse import unquote
 
 from pyrogram import Client, filters
 from pyrogram.errors import BadRequest
 from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
-from pySmartDL import SmartDL
-from bot.welpers.utilities.functions import *
 
 from bot import AUTH_USER, Config
+from bot.welpers.utilities.functions import *
 
 CB_BUTTONS = [
     [
@@ -31,40 +27,42 @@ else:
 @Client.on_message(filters.command("link") & OWNER_FILTER)
 async def linkloader(bot, update):
     xlink = await update.reply_text("Processing...")
-    cmd = update.text.split(" ", 1)[1]
-    if Config.BUTTONS == True:
-        return await xlink.reply('You wanna upload files as?', True, reply_markup=InlineKeyboardMarkup(CB_BUTTONS))
+    update.text.split(" ", 1)[1]
+    if Config.BUTTONS:
+        return await xlink.reply(
+            "You wanna upload files as?",
+            True,
+            reply_markup=InlineKeyboardMarkup(CB_BUTTONS),
+        )
     elif Config.BUTTONS == False:
         pass
-    dirs = f'./downloads/{update.from_user.id}'
+    dirs = f"./downloads/{update.from_user.id}"
     if not os.path.isdir(dirs):
         os.makedirs(dirs)
     output_filename = str(update.from_user.id)
-    filename = f'./{output_filename}.zip'
-    pablo = await update.reply_text('Downloading...')
-    urlx = update.text.split('\n')
+    filename = f"./{output_filename}.zip"
+    pablo = await update.reply_text("Downloading...")
+    urlx = update.text.split("\n")
     rm, total, up = len(urlx), len(urlx), 0
     await pablo.edit_text(f"Total: {total}\nDownloaded: {up}\nDownloading: {rm}")
     for url in urlx:
         download_file(url, dirs)
-        up+=1
-        rm-=1
+        up += 1
+        rm -= 1
         try:
-            await pablo.edit_text(f"Total: {total}\nDownloaded: {up}\nDownloading: {rm}")
+            await pablo.edit_text(
+                f"Total: {total}\nDownloaded: {up}\nDownloading: {rm}"
+            )
         except BadRequest:
             pass
-    await pablo.edit_text('Uploading...')
-    if Config.AS_ZIP == True:
-        shutil.make_archive(output_filename, 'zip', dirs)
+    await pablo.edit_text("Uploading...")
+    if Config.AS_ZIP:
+        shutil.make_archive(output_filename, "zip", dirs)
         start_time = time.time()
         await update.reply_document(
             filename,
             progress=progress_for_pyrogram,
-            progress_args=(
-                'Uploading...',
-                pablo,
-                start_time
-            )
+            progress_args=("Uploading...", pablo, start_time),
         )
         await pablo.delete()
         os.remove(filename)
@@ -78,21 +76,20 @@ async def linkloader(bot, update):
             await update.reply_document(
                 files,
                 progress=progress_for_pyrogram,
-                progress_args=(
-                    'Uploading...',
-                    pablo,
-                    start_time
-                )
+                progress_args=("Uploading...", pablo, start_time),
             )
-            up+=1
-            rm-=1
+            up += 1
+            rm -= 1
             try:
-                await pablo.edit_text(f"Total: {total}\nUploaded: {up}\nUploading: {rm}")
+                await pablo.edit_text(
+                    f"Total: {total}\nUploaded: {up}\nUploading: {rm}"
+                )
             except BadRequest:
                 pass
             time.sleep(1)
         await pablo.delete()
         shutil.rmtree(dirs)
+
 
 @Client.on_message(filters.document & OWNER_FILTER)
 async def loader(bot, update):
