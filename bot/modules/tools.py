@@ -6,15 +6,15 @@ import sys
 import traceback
 from getpass import getuser
 
-from pyrogram import filters
+from pyrogram import filters, Client
 
-from bot import AUTH_USER, CMD, Config, oppai
+from bot import AUTH_USER, CMD, Config
 from bot.modules.markups import base_markup, refresh_space
 from bot.welpers.utilities.functions import get_server_details, ip
 from bot.welpers.utilities.terminal import Terminal
 
 
-@oppai.on_message(filters.command(CMD.TEML) & filters.user(AUTH_USER))
+@Client.on_message(filters.command(CMD.TEML) & filters.user(AUTH_USER))
 async def teml(bot, update):
     cmd = update.text.split(" ", 1)
     if len(cmd) == 1:
@@ -61,7 +61,7 @@ async def teml(bot, update):
     await send(out_data)
 
 
-@oppai.on_message(filters.command(CMD.RUNF) & filters.user(AUTH_USER))
+@Client.on_message(filters.command(CMD.RUNF) & filters.user(AUTH_USER))
 async def eval(bot, update):
     status_m = await update.reply_text("`Processing...`")
     cmd = update.text.split(" ", 1)
@@ -126,7 +126,7 @@ async def aexec(code, bot, update):
     return await locals()["__aexec"](bot, update)
 
 
-@oppai.on_message(filters.command(CMD.CD) & filters.user(AUTH_USER))
+@Client.on_message(filters.command(CMD.CD) & filters.user(AUTH_USER))
 async def cd(bot, update):
     cmd = update.text.split(" ", 1)
     if len(cmd) == 1:
@@ -145,16 +145,16 @@ async def cd(bot, update):
         await update.reply_text(str(e))
 
 
-@oppai.on_message(filters.command(CMD.FILES) & filters.user(AUTH_USER))
+@Client.on_message(filters.command(CMD.FILES) & filters.user(AUTH_USER))
 async def my_files(bot, update):
     await update.reply_text("what you want to show?", reply_markup=base_markup)
 
 
-@oppai.on_message(filters.command(CMD.IP) & filters.user(AUTH_USER))
+@Client.on_message(filters.command(CMD.IP) & filters.user(AUTH_USER))
 async def ip_cmd(bot, update):
     await update.reply(ip(), parse_mode="markdown")
 
 
-@oppai.on_message(filters.command(CMD.STATUS) & filters.user(AUTH_USER))
+@Client.on_message(filters.command(CMD.STATUS) & filters.user(AUTH_USER))
 async def stats(bot, update):
     await update.reply_text(get_server_details(), reply_markup=refresh_space)
