@@ -88,7 +88,7 @@ __Core & Cpu Info__
 __Ram Info__
   Total: {humanbytes(tram)}
   Available: {humanbytes(aram)}
-  Used: {human_readable_speed(uram)}
+  Used: {humanbytes(uram)}
   Free: {humanbytes(fram)}
   Usage: {fpercent}%
 
@@ -135,22 +135,25 @@ def human_readable_speed(size):
 
 
 def get_readable_time(seconds: int) -> str:
-    result = ""
-    (days, remainder) = divmod(seconds, 86400)
-    days = int(days)
-    if days != 0:
-        result += f"{days}d"
-    (hours, remainder) = divmod(remainder, 3600)
-    hours = int(hours)
-    if hours != 0:
-        result += f"{hours}h"
-    (minutes, seconds) = divmod(remainder, 60)
-    minutes = int(minutes)
-    if minutes != 0:
-        result += f"{minutes}m"
-    seconds = int(seconds)
-    result += f"{seconds}s"
-    return result
+    count = 0
+    up_time = ""
+    time_list = []
+    time_suffix_list = ["s", "m", "h", "days"]
+    while count < 4:
+        count += 1
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
+        if seconds == 0 and remainder == 0:
+            break
+        time_list.append(int(result))
+        seconds = int(remainder)
+    hmm = len(time_list)
+    for x in range(hmm):
+        time_list[x] = str(time_list[x]) + time_suffix_list[x]
+    if len(time_list) == 4:
+        up_time += f"{time_list.pop()}, "
+    time_list.reverse()
+    up_time += ":".join(time_list)
+    return up_time
 
 
 def humanbytes(size_in_bytes) -> str:
@@ -161,7 +164,7 @@ def humanbytes(size_in_bytes) -> str:
         size_in_bytes /= 1024
         index += 1
     try:
-        return f"{round(size_in_bytes, 2)}{SIZE_UNITS[index]}"
+        return f"{round(size_in_bytes, 2)} {SIZE_UNITS[index]}"
     except IndexError:
         return "File too large"
 
