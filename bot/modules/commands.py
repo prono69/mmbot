@@ -16,7 +16,7 @@ START_BUTTONS=[
 
 @Client.on_message(filters.command(CMD.START))
 async def start(bot, update):
-    await update.reply_text(text=lang.START_TEXT.format(update.from_user.mention), True, reply_markup=InlineKeyboardMarkup(START_BUTTONS))
+    await update.reply_text(text=f"<b>Hello {update.from_user.mention},I am OppaiRobot.</b>\n<i>I can do some things.</i> :)", disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(START_BUTTONS))
 
 
 @Client.on_message(
