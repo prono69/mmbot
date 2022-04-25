@@ -1,4 +1,4 @@
-import os, time, math, shutil, 
+import os, time, math, shutil
 from pyromod import listen
 from urllib.parse import unquote
 from pySmartDL import SmartDL
