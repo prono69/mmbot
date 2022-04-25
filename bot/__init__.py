@@ -47,3 +47,4 @@ class CMD(object):
     FILES = ["my_files", f"my_files@{handler}"]
     IP = ["ip", f"ip@{handler}"]
     STATUS = ["stats", f"stats@{handler}"]
+    LINK = ["link", f"link@{handler}"]

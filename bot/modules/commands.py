@@ -1,17 +1,22 @@
 from pyrogram import Client, filters
-
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from bot import CMD
 from bot.welpers.translations import lang
 from bot.welpers.utilities import bypasser
 
+# Buttons
+START_BUTTONS=[
+    [
+        InlineKeyboardButton("Source", url="https://github.com/prono69"),
+        InlineKeyboardButton("Channel", url="https://t.me/LazyAF_Pepe"),
+    ],
+    [InlineKeyboardButton("Author", url="https://kirito.in")],
+]
+
 
 @Client.on_message(filters.command(CMD.START))
 async def start(bot, update):
-    await update.reply_text(
-        text=lang.START_TEXT.format(update.from_user.mention),
-        disable_web_page_preview=True,
-        quote=True,
-    )
+    await update.reply_text(text=lang.START_TEXT.format(update.from_user.mention), True, reply_markup=InlineKeyboardMarkup(START_BUTTONS))
 
 
 @Client.on_message(
