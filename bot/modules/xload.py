@@ -18,7 +18,7 @@ CB_BUTTONS = [
 ]
 
 hm = listen
-OWNER_FILTER = filters.chat(AUTH_USER) & filters.incoming
+OWNER_FILTER = filters.user(AUTH_USER) & filters.incoming
 
 
 @Client.on_message(filters.command(CMD.LINK) & OWNER_FILTER)
@@ -62,7 +62,7 @@ async def linkloader(bot, update):
         start_time = time.time()
         await update.reply_document(
             filename,
-            progress=await progress_for_pyrogram,
+            progress=progress_for_pyrogram,
             progress_args=("Uploading...", pablo, start_time),
         )
         await pablo.delete()
@@ -76,7 +76,7 @@ async def linkloader(bot, update):
             start_time = time.time()
             await update.reply_document(
                 files,
-                progress=await progress_for_pyrogram,
+                progress=progress_for_pyrogram,
                 progress_args=("Uploading...", pablo, start_time),
             )
             up += 1
@@ -133,7 +133,7 @@ async def loader(bot, update):
         start_time = time.time()
         await update.reply_document(
             filename,
-            progress=await progress_for_pyrogram,
+            progress=progress_for_pyrogram,
             progress_args=("Uploading...", pablo, start_time),
         )
         await pablo.delete()
@@ -147,7 +147,7 @@ async def loader(bot, update):
             start_time = time.time()
             await update.reply_document(
                 files,
-                progress=await progress_for_pyrogram,
+                progress=progress_for_pyrogram,
                 progress_args=("Uploading...", pablo, start_time),
             )
             up += 1
@@ -217,7 +217,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         start_time = time.time()
         await update.reply_document(
             filename,
-            progress=await progress_for_pyrogram,
+            progress=progress_for_pyrogram,
             progress_args=("Uploading...", pablo, start_time),
         )
         await pablo.delete()
@@ -231,7 +231,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
             start_time = time.time()
             await update.reply_document(
                 files,
-                progress=await progress_for_pyrogram,
+                progress=progress_for_pyrogram,
                 progress_args=("Uploading...", pablo, start_time),
             )
             up += 1
