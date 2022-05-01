@@ -5,7 +5,7 @@ import time
 from pyrogram import Client, filters
 from pyrogram.errors import BadRequest
 from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
-from pyromod import listen
+import pyromod.listen
 
 from bot import AUTH_USER, CMD, Config
 from bot.welpers.utilities.functions import *
@@ -17,7 +17,6 @@ CB_BUTTONS = [
     ]
 ]
 
-hm = listen
 OWNER_FILTER = filters.user(AUTH_USER) & filters.incoming
 
 

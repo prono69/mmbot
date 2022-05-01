@@ -2,6 +2,7 @@ import logging
 from bot import Config
 from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
+import pyromod.listen
 
 logging.basicConfig(
     level=logging.INFO,
