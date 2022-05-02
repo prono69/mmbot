@@ -11,7 +11,6 @@ from bot import AUTH_USER, CMD, Config
 AS_ZIP = bool(os.environ['AS_ZIP']) # Upload method. If True: will Zip all your files and send as zipfile | If False: will send file one by one
 BUTTONS = bool(os.environ['BUTTONS']) # Upload mode. If True: will send buttons (Zip or One by One) instead of AZ_ZIP | If False: will do as you've fill on AZ_ZIP
 
-
 CB_BUTTONS=[
     [
         InlineKeyboardButton("Zip", callback_data="zip"),
@@ -118,12 +117,12 @@ async def absolute_paths(directory):
 
 
 if AUTH_USER:
-    OWNER_FILTER = filters.chat(AUTH_USER) & filters.incoming
+    OWNER_FILTER = filters.user(AUTH_USER) & filters.incoming
 else:
     OWNER_FILTER = filters.incoming
 
 
-@Client.on_message(filters.command('link') & OWNER_FILTER & filters.private)
+@Client.on_message(filters.command(CMD.LINK) & OWNER_FILTER)
 async def linkloader(bot, update):
     xlink = await bot.ask(update.chat.id, 'Send your links, separated each link by new line', filters='text', timeout=300)
     if BUTTONS == True:
@@ -189,7 +188,7 @@ async def linkloader(bot, update):
         shutil.rmtree(dirs)
 
 
-@Client.on_message(filters.document & OWNER_FILTER & filters.private)
+@Client.on_message(filters.document & OWNER_FILTER)
 async def loader(bot, update):
     if BUTTONS == True:
         return await update.reply('You wanna upload files as?', True, reply_markup=InlineKeyboardMarkup(CB_BUTTONS))
@@ -342,5 +341,3 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
             time.sleep(1)
         await pablo.delete()
         shutil.rmtree(dirs)
-
-

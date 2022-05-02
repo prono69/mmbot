@@ -2,7 +2,7 @@ bs4
 beautifulsoup4
 cloudscraper
 lxml
-pyrogram==1.4
+pyrogram==1.4.16
 pySmartDL==1.3.4
 requests
 tgcrypto
