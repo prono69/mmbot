@@ -79,3 +79,15 @@ async def bif(bot, update):
     message = await update.reply_text(
         text=ouo, disable_web_page_preview=True, quote=True
     )
+
+
+@Client.on_message(
+    filters.command(["test"])
+    & filters.regex(r"https?://[^\s]+"))
+async def xy(bot, update):
+    urlx = update.matches[0].group(0)
+    kek = bypasser.xyz(urlx)
+    message = await update.reply_text(
+        text=kek, disable_web_page_preview=True, quote=True
+    )
+    
