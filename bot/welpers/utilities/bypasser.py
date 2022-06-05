@@ -242,6 +242,6 @@ def xyz(urlx):
                            )
                             os.remove(filename)
                             await Xf.delete()
-                       else:
-                            await Xf.edit(final_list)
+                    else:
+                    	await Xf.edit(final_list)
                     
