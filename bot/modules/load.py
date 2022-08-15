@@ -5,7 +5,7 @@ from urllib.error import HTTPError
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import BadRequest
-from bot import AUTH_USER, CMD, Config
+from bot import CMD, Config
 
 # Configs
 AS_ZIP = bool(os.environ['AS_ZIP']) # Upload method. If True: will Zip all your files and send as zipfile | If False: will send file one by one
@@ -116,8 +116,8 @@ async def absolute_paths(directory):
 
 
 
-if AUTH_USER:
-    OWNER_FILTER = filters.user(AUTH_USER) & filters.incoming
+if Config.AUTH_USER:
+    OWNER_FILTER = filters.user(Config.AUTH_USER) & filters.incoming
 else:
     OWNER_FILTER = filters.incoming
 

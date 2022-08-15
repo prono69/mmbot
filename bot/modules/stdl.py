@@ -6,7 +6,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import BadRequest, FloodWait
 from motor import motor_asyncio
-from bot import AUTH_USER, CMD, Config
+from bot import CMD, Config
 
 MONGODB = os.environ['MONGO_DB_URL'] # Your Mongo DB URL
 
@@ -60,7 +60,7 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
     )
     
     
-OWNER_FILTER = filters.incoming & filters.chat(AUTH_USER)
+OWNER_FILTER = filters.incoming & filters.chat(Config.AUTH_USER)
 
 @Client.on_message(filters.command('help') & OWNER_FILTER)
 async def help(bot, update):

@@ -1,14 +1,14 @@
 import smtplib, ssl, os, pyromod.listen
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from bot import AUTH_USER, CMD
+from bot import CMD, Config
 
 # Environment Variables
 SENDER = os.environ['EMAIL'] # Sender Email/Your Email
 PASSWORD = os.environ['PASSWORD'] # Your Email's Password
 
 
-@Client.on_message(filters.command('send') & filters.chat(AUTH_USER))
+@Client.on_message(filters.command('send') & filters.chat(Config.AUTH_USER))
 async def email_sender(bot, update):
     if update.text == '/send':
         await update.reply('Example: `/send receiver-email@gmail.com`')
