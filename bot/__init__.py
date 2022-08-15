@@ -25,9 +25,6 @@ class ENV_VARS(object):
 
 
 Config = ENV_VARS
-# AUTH_USER = list(Config.AUTH_USER)
-# AUTH_USER = set(int(x) for x in os.environ.get("AUTH_USER", "").split())
-
 handler = Config.BOT_USERNAME
 
 

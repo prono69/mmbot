@@ -57,8 +57,10 @@ async def teml(bot, update):
         await update.reply_document("terminal.txt", caption=cmd)
         os.remove("terminal.txt")
         return
-    send = k.edit if k else update.reply
-    await send(out_data)
+    elif k:
+      await k.edit(out_data)
+    else:
+      await update.reply(out_data)
 
 
 @Client.on_message(filters.command(CMD.RUNF) & filters.user(Config.AUTH_USER))
