@@ -17,6 +17,7 @@ from bot.welpers.utilities.terminal import Terminal
 @Client.on_message(filters.command(CMD.TEML) & filters.user(Config.AUTH_USER))
 async def teml(bot, update):
     cmd = update.text.split(" ", 1)
+    oho = await update.reply_text("`Processing...`")
     if len(cmd) == 1:
         await update.reply_text("No command to execute was given.")
         return
@@ -58,9 +59,9 @@ async def teml(bot, update):
         os.remove("terminal.txt")
         return
     elif k:
-      await k.edit(out_data)
+      await oho.edit(out_data)
     else:
-      await update.reply(out_data)
+      await update.reply_text(out_data)
 
 
 @Client.on_message(filters.command(CMD.RUNF) & filters.user(Config.AUTH_USER))

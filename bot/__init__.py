@@ -22,6 +22,8 @@ class ENV_VARS(object):
     AUTH_USERS = set(int(x) for x in os.environ.get("AUTH_USER", "").split())
     AUTH_USER = list(AUTH_USERS)
     MAX_MESSAGE_LENGTH = int(os.environ.get("MAX_MESSAGE_LENGTH", 4096))
+    SENDER = os.environ.get("EMAIL") # Sender Email/Your Email
+    PASSWORD = os.environ.get("PASSWORD") # Your Email's Password
 
 
 Config = ENV_VARS
@@ -43,3 +45,4 @@ class CMD(object):
     IP = ["ip", f"ip@{handler}"]
     STATUS = ["stats", f"stats@{handler}"]
     LINK = ["link", f"link@{handler}"]
+    EMAIL = ["email", f"email@{handler}"]
