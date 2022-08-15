@@ -19,14 +19,14 @@ class ENV_VARS(object):
     BOT_TOKEN = os.environ.get("BOT_TOKEN")
     BOT_USERNAME = os.environ.get("BOT_USERNAME")
     LANGUAGE = os.environ.get("LANGUAGE", "EN")
-    AUTH_USER = set(int(x) for x in os.environ.get("AUTH_USER", "").split())
+    # AUTH_USER = set(int(x) for x in os.environ.get("AUTH_USER", "").split())
     MAX_MESSAGE_LENGTH = int(os.environ.get("MAX_MESSAGE_LENGTH", 4096))
 
 
 Config = ENV_VARS
-AUTH_USER = list(Config.AUTH_USER)
+# AUTH_USER = list(Config.AUTH_USER)
 
-AUTH_USER = list(set(AUTH_USER))
+AUTH_USER = [set(int(x) for x in os.environ.get("AUTH_USER", "").split())]
 
 handler = Config.BOT_USERNAME
 
