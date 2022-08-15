@@ -9,7 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from bot import Config
-from bot.welpers.utilities.functions import get_readable_time, humanbytes
+from bot.helpers.functions import get_readable_time, humanbytes
 
 # wetransfer
 WETRANSFER_API_URL = "https://wetransfer.com/api/v4/transfers"
