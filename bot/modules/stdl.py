@@ -1,6 +1,6 @@
 # Copyright by X-Noid
 
-import os, time, shutil, random, glob, asyncio, uuid, shlex, re, pyromod.listen
+import os, time, shutil, random, glob, asyncio, uuid, shlex, re
 from typing import Tuple
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery

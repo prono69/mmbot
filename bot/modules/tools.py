@@ -10,8 +10,8 @@ from pyrogram import Client, filters
 
 from bot import CMD, Config
 from bot.modules.markups import base_markup, refresh_space
-from bot.welpers.utilities.functions import get_server_details, ip
-from bot.welpers.utilities.terminal import Terminal
+from bot.helpers.functions import get_server_details, ip
+from bot.helpers.terminal import Terminal
 
 
 @Client.on_message(filters.command(CMD.TEML) & filters.user(Config.AUTH_USER))

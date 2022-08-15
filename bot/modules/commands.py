@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from bot import CMD
-from bot.welpers.utilities import bypasser
+from bot.helpers import bypasser
 
 # Buttons
 START_BUTTONS = [

@@ -2,7 +2,7 @@ import logging
 from bot import Config
 from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
-import pyromod.listen
+from pyromod import listen
 
 logging.basicConfig(
     level=logging.INFO,
@@ -36,5 +36,4 @@ class Bot(Client):
         LOGGER.info('Bot Stopped ! Bye..........')
 
 
-app = Bot()
-app.run()
+Bot().run()
