@@ -7,17 +7,17 @@ from bot.welpers.utilities import bypasser
 # Buttons
 START_BUTTONS = [
     [
-        InlineKeyboardButton("Source", url="https://github.com/prono69"),
-        InlineKeyboardButton("Channel", url="https://t.me/LazyAF_Pepe"),
+        InlineKeyboardButton("Source ❤️", url="https://github.com/prono69"),
+        InlineKeyboardButton("Sus Channel 🍆", url="https://t.me/TrulyRealNinja"),
     ],
-    [InlineKeyboardButton("Author", url="https://kirito.in")],
+    [InlineKeyboardButton("Author 👨", url="https://kirito.in")],
 ]
 
 
 @Client.on_message(filters.command(CMD.START))
 async def start(bot, update):
     await update.reply_text(
-        text=f"<b>Hello {update.from_user.mention},I am OppaiRobot.</b>\n<i>I can do some things.</i> :)",
+        text=f"<b>Konichiwa {update.from_user.first_name},I am OppaiRobot.</b>\n<i>I can do some things.</i> :)",
         disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup(START_BUTTONS),
     )
