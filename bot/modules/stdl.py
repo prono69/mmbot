@@ -8,7 +8,10 @@ from pyrogram.errors import BadRequest, FloodWait
 from motor import motor_asyncio
 from bot import CMD, Config
 
-MONGODB = os.environ['MONGO_DB_URL'] # Your Mongo DB URL
+try:
+	MONGODB = os.environ.get('MONGO_DB_URL', None) # Your Mongo DB URL
+except KeyError:
+	pass
 
 if MONGODB:
     db = motor_asyncio.AsyncIOMotorClient(MONGODB)['spotifyloader']['users']
