@@ -28,17 +28,6 @@ class ENV_VARS(object):
     SENDER = os.environ.get("EMAIL") # Sender Email/Your Email
     PASSWORD = os.environ.get("PASSWORD") # Your Email's Password
     LOG_CHANNEL = os.environ.get("LOG_CHANNEL", "-1001684936508")
-    # customisations
-    FINISHED_PROGRESS_STR = os.environ.get('FINISHED_PROGRESS_STR','●')
-    UN_FINISHED_PROGRESS_STR = os.environ.get('UN_FINISHED_PROGRESS_STR','○')
-    PROGRESSBAR_LENGTH = int(os.environ.get('PROGRESSBAR_LENGTH', 25))
-    JOIN_CHANNEL_STR = os.environ.get('JOIN_CHANNEL_STR',
-        "Hi {}\n\n" + \
-        "🇬🇧 First subscribe my channel from button, try again.")
-    YOU_ARE_BANNED_STR = os.environ.get('YOU_ARE_BANNED_STR',
-        "🇬🇧 You are Banned to use me.\n\nSupport: {}")
-    JOIN_BUTTON_STR = os.environ.get('JOIN_BUTTON_STR', "🇬🇧 Join")
-
 
 Config = ENV_VARS
 handler = Config.BOT_USERNAME
