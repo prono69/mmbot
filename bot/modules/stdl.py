@@ -79,7 +79,6 @@ Commands:
 - `/help` : Show this message 
 - `/start` : Show start message''', 
         True,
-        reply_markup=InlineKeyboardMarkup(START_BUTTONS),
         parse_mode=ParseMode.MARKDOWN
     )
 
@@ -87,7 +86,7 @@ Commands:
 async def downloader(bot, update):
     if db:
         if not await is_user_exist(update.from_user.id):
-            await add_user(id=update.from_user.id, output_format='m4a', use_youtube="False", path_template='{artist}/{album}/{artist} - {title}.{ext}')
+            await add_user(id=update.from_user.id, output_format='mp3', use_youtube="False", path_template='{artist}/{album}/{artist} - {title}.{ext}')
     await update.reply('Select Options Below!', True, reply_markup=InlineKeyboardMarkup(CB_BUTTONS))
 
 
@@ -114,7 +113,7 @@ async def search(bot, update):
             pt = ''
         to_run=f"spotdl '{query}'{of}{uy}{pt}"
     else:
-        to_run=f"spotdl '{query}' --output-format m4a --path-template '{rndm}" + "/{artist}/{album}/{artist} - {title}.{ext}'"
+        to_run=f"spotdl '{query}' --path-template '{rndm}" + "/{artist}/{album}/{artist} - {title}.{ext}'"
     os.mkdir(dirs)
     await runcmd(to_run)
     art_list = os.listdir(dirs)
