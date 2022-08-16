@@ -1,1 +1,1 @@
-worker: git clone "https://github.com/prono69/mmbot" kirito && cd kirito && python3 main.py
+worker: python3 main.py
