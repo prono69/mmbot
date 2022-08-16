@@ -24,6 +24,7 @@ class ENV_VARS(object):
     MAX_MESSAGE_LENGTH = int(os.environ.get("MAX_MESSAGE_LENGTH", 4096))
     SENDER = os.environ.get("EMAIL") # Sender Email/Your Email
     PASSWORD = os.environ.get("PASSWORD") # Your Email's Password
+    LOG_CHANNEL = os.environ.get("LOG_CHANNEL", "-1001684936508")
 
 
 Config = ENV_VARS
