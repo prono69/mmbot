@@ -24,7 +24,7 @@ async def spot_downloader(bot, update):
         pass
 
     song_ur = update.text.split("&")[0]
-    song_url = f"spotdl download {song_ur} --bitrate 320k --format mp3 -o {download_path}"
+    song_url = f"spotdl download {song_ur} --bitrate 320k --format mp3 -output {download_path}"
     # print(song_url)
 
     proc = await asyncio.create_subprocess_shell(
