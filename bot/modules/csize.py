@@ -19,13 +19,13 @@ from pyrogram.errors.exceptions.not_acceptable_406 import ChannelPrivate
 quee = []
 tg_link_regex = "(https://)?(t\.me/|telegram\.me/|telegram\.dog/)(c/)?(\d+|[a-zA-Z_0-9]+)/(\d+)$"
 
-def run_task(gelen: Message, duzenlenecek: Message):
+async def run_task(gelen: Message, duzenlenecek: Message):
     try:
         if gelen.text:
             regex = re.compile(tg_link_regex)
             match = regex.match(gelen.text)
             if not match:
-                duzenlenecek.edit_text(
+                await duzenlenecek.edit_text(
                     '🇬🇧 Forward the last message on the channel or send the last message link.' \
                     '\nExample: `https://t.me/c/6262626/24234234`'
                     , disable_web_page_preview=True
@@ -39,7 +39,7 @@ def run_task(gelen: Message, duzenlenecek: Message):
             last_msg_id = gelen.forward_from_message_id
             chat_id = gelen.forward_from_chat.username or gelen.forward_from_chat.id
         else:
-            duzenlenecek.edit_text(
+            await duzenlenecek.edit_text(
                     '🇬🇧 Must be a channel or group.'
                     , disable_web_page_preview=True
                 )
@@ -166,7 +166,7 @@ def handler(_, message: Message):
     quee.append([message, duz])
     if len(quee) == 1: run_task(message, duz)
 
-@Client.on_message(filters.command(["help", "yardım", "yardim", "start", "h", "y"]))
+@Client.on_message(filters.command(["yardım", "yardim", "h", "y"]))
 def welcome(_, message: Message):
     if not AuthUserCheck(message): return
     te ="🇬🇧 Hi. Send a channel/group id and I will calculate the full size of all files." \

@@ -80,7 +80,7 @@ Commands:
 - `/start` : Show start message''', 
         True,
         reply_markup=InlineKeyboardMarkup(START_BUTTONS),
-        parse_mode='ParseMode.MARKDOWN'
+        parse_mode=ParseMode.MARKDOWN
     )
 
 @Client.on_message(filters.regex(r'http.*:[/][/]open[.]spotify[.]com.(track|album|artist|playlist)', re.M) & OWNER_FILTER)
@@ -130,7 +130,7 @@ async def search(bot, update):
         except FloodWait as e:
             await asyncio.sleep(e.x)
             await bot.send_audio(chat_id=update.from_user.id, audio=music)
-    await update.reply(f'Successfully uploaded {x}', parse_mode='ParseMode.MARKDOWN')
+    await update.reply(f'Successfully uploaded {x}', parse_mode=ParseMode.MARKDOWN)
     shutil.rmtree(dirs)
     
 
@@ -168,7 +168,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         stats = await get_stats(update.from_user.id)
         await updatex.message.edit(
             f'Current Output Format: `{stats["output_format"]}`\n\nSelect one of the buttons below to change your output format.',
-            parse_mode='ParseMode.MARKDOWN'
+            parse_mode=ParseMode.MARKDOWN
         )
         return await updatex.message.edit_reply_markup(
             InlineKeyboardMarkup([
@@ -197,7 +197,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         stats = await get_stats(update.from_user.id)
         await updatex.message.edit(
             f'Current Output Format: `{stats["output_format"]}`\n\nSelect one of the buttons below to change your output format.',
-            parse_mode='ParseMode.MARKDOWN'
+            parse_mode=ParseMode.MARKDOWN
         )
         return await updatex.message.edit_reply_markup(
             InlineKeyboardMarkup([
@@ -220,7 +220,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         stats = await get_stats(update.from_user.id)
         await updatex.message.edit(
             f'Is Using Youtube: `{str(stats["use_youtube"])}`\n\nSelect one of the buttons below to change your is using youtube.',
-            parse_mode='ParseMode.MARKDOWN'
+            parse_mode=ParseMode.MARKDOWN
         )
         return await updatex.message.edit_reply_markup(
             InlineKeyboardMarkup([
@@ -239,7 +239,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         stats = await get_stats(update.from_user.id)
         await updatex.message.edit(
             f'Is Using Youtube: `{str(stats["use_youtube"])}`\n\nSelect one of the buttons below to change your is using youtube.',
-            parse_mode='ParseMode.MARKDOWN'
+            parse_mode=ParseMode.MARKDOWN
         )
         return await updatex.message.edit_reply_markup(
             InlineKeyboardMarkup([
@@ -254,7 +254,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         stats = await get_stats(update.from_user.id)
         await updatex.message.edit(
             f'Current Path Template: `{str(stats["path_template"])}`\n\nSelect one of the buttons below to change your current path template.',
-            parse_mode='ParseMode.MARKDOWN'
+            parse_mode=ParseMode.MARKDOWN
         )
         return await updatex.message.edit_reply_markup(
             InlineKeyboardMarkup([
@@ -282,7 +282,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
                     InlineKeyboardButton("Back", callback_data="back"),
                 ],
             ]),
-            parse_mode='ParseMode.MARKDOWN'
+            parse_mode=ParseMode.MARKDOWN
         )
     if cb_data == 'back':
         await updatex.message.edit(
@@ -349,5 +349,5 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 await bot.send_audio(chat_id=update.from_user.id, audio=music)
-    await update.reply(f'Successfully uploaded {x} from a Spotify {xx} [ㅤ]({url})', parse_mode='ParseMode.MARKDOWN')
+    await update.reply(f'Successfully uploaded {x} from a Spotify {xx} [ㅤ]({url})', parse_mode=ParseMode.MARKDOWN)
     shutil.rmtree(dirs)
