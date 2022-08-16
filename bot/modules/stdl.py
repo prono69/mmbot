@@ -5,6 +5,7 @@ from typing import Tuple
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import BadRequest, FloodWait
+from pyrogram.enums.parse_mode import ParseMode
 from motor import motor_asyncio
 from bot import CMD, Config
 
@@ -67,9 +68,6 @@ OWNER_FILTER = filters.incoming & filters.chat(Config.AUTH_USER)
 
 @Client.on_message(filters.command('help') & OWNER_FILTER)
 async def help(bot, update):
-    if db:
-        if not await is_user_exist(update.from_user.id):
-            await add_user(id=update.from_user.id, output_format='mp3', use_youtube="False", path_template='{artist}/{album}/{artist} - {title}.{ext}')
     await update.reply(
         '''How to use this bot?!
 
@@ -82,14 +80,14 @@ Commands:
 - `/start` : Show start message''', 
         True,
         reply_markup=InlineKeyboardMarkup(START_BUTTONS),
-        parse_mode='markdown'
+        parse_mode='ParseMode.MARKDOWN'
     )
 
 @Client.on_message(filters.regex(r'http.*:[/][/]open[.]spotify[.]com.(track|album|artist|playlist)', re.M) & OWNER_FILTER)
 async def downloader(bot, update):
     if db:
         if not await is_user_exist(update.from_user.id):
-            await add_user(id=update.from_user.id, output_format='mp3', use_youtube="False", path_template='{artist}/{album}/{artist} - {title}.{ext}')
+            await add_user(id=update.from_user.id, output_format='m4a', use_youtube="False", path_template='{artist}/{album}/{artist} - {title}.{ext}')
     await update.reply('Select Options Below!', True, reply_markup=InlineKeyboardMarkup(CB_BUTTONS))
 
 
@@ -116,7 +114,7 @@ async def search(bot, update):
             pt = ''
         to_run=f"spotdl '{query}'{of}{uy}{pt}"
     else:
-        to_run=f"spotdl '{query}' --path-template '{rndm}" + "/{artist}/{album}/{artist} - {title}.{ext}'"
+        to_run=f"spotdl '{query}' --output-format m4a --path-template '{rndm}" + "/{artist}/{album}/{artist} - {title}.{ext}'"
     os.mkdir(dirs)
     await runcmd(to_run)
     art_list = os.listdir(dirs)
@@ -132,7 +130,7 @@ async def search(bot, update):
         except FloodWait as e:
             await asyncio.sleep(e.x)
             await bot.send_audio(chat_id=update.from_user.id, audio=music)
-    await update.reply(f'Successfully uploaded {x}', parse_mode='markdown')
+    await update.reply(f'Successfully uploaded {x}', parse_mode='ParseMode.MARKDOWN')
     shutil.rmtree(dirs)
     
 
@@ -170,7 +168,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         stats = await get_stats(update.from_user.id)
         await updatex.message.edit(
             f'Current Output Format: `{stats["output_format"]}`\n\nSelect one of the buttons below to change your output format.',
-            parse_mode='markdown'
+            parse_mode='ParseMode.MARKDOWN'
         )
         return await updatex.message.edit_reply_markup(
             InlineKeyboardMarkup([
@@ -199,7 +197,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         stats = await get_stats(update.from_user.id)
         await updatex.message.edit(
             f'Current Output Format: `{stats["output_format"]}`\n\nSelect one of the buttons below to change your output format.',
-            parse_mode='markdown'
+            parse_mode='ParseMode.MARKDOWN'
         )
         return await updatex.message.edit_reply_markup(
             InlineKeyboardMarkup([
@@ -222,7 +220,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         stats = await get_stats(update.from_user.id)
         await updatex.message.edit(
             f'Is Using Youtube: `{str(stats["use_youtube"])}`\n\nSelect one of the buttons below to change your is using youtube.',
-            parse_mode='markdown'
+            parse_mode='ParseMode.MARKDOWN'
         )
         return await updatex.message.edit_reply_markup(
             InlineKeyboardMarkup([
@@ -241,7 +239,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         stats = await get_stats(update.from_user.id)
         await updatex.message.edit(
             f'Is Using Youtube: `{str(stats["use_youtube"])}`\n\nSelect one of the buttons below to change your is using youtube.',
-            parse_mode='markdown'
+            parse_mode='ParseMode.MARKDOWN'
         )
         return await updatex.message.edit_reply_markup(
             InlineKeyboardMarkup([
@@ -256,7 +254,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
         stats = await get_stats(update.from_user.id)
         await updatex.message.edit(
             f'Current Path Template: `{str(stats["path_template"])}`\n\nSelect one of the buttons below to change your current path template.',
-            parse_mode='markdown'
+            parse_mode='ParseMode.MARKDOWN'
         )
         return await updatex.message.edit_reply_markup(
             InlineKeyboardMarkup([
@@ -284,7 +282,7 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
                     InlineKeyboardButton("Back", callback_data="back"),
                 ],
             ]),
-            parse_mode='markdown'
+            parse_mode='ParseMode.MARKDOWN'
         )
     if cb_data == 'back':
         await updatex.message.edit(
@@ -351,5 +349,5 @@ async def callbacks(bot: Client, updatex: CallbackQuery):
             except FloodWait as e:
                 await asyncio.sleep(e.x)
                 await bot.send_audio(chat_id=update.from_user.id, audio=music)
-    await update.reply(f'Successfully uploaded {x} from a Spotify {xx} [ㅤ]({url})', parse_mode='markdown')
+    await update.reply(f'Successfully uploaded {x} from a Spotify {xx} [ㅤ]({url})', parse_mode='ParseMode.MARKDOWN')
     shutil.rmtree(dirs)
